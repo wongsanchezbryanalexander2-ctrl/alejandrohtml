@@ -1,31 +1,257 @@
-<!DOCTYPE html> 
-<html lang="es"
+<!DOCTYPE html>
+<html lang="es">
   <head>
-  <meta charset="UTF-8" /<
-    <title>youtube music</title> 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberLab | Alejandro</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #0b1120;
+        color: #e2e8f0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        padding: 30px 15px;
+      }
+
+      .contenedor {
+        max-width: 750px;
+        margin: 0 auto;
+      }
+
+      /* Cabecera */
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 25px;
+        background-color: #111827;
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+      }
+
+      h1 {
+        color: #38bdf8;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+
+      .subtitulo {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+
+      /* Cuadro del Generador de Contraseñas */
+      .caja-herramienta {
+        background-color: #111827;
+        border: 2px solid #22c55e;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      }
+
+      .caja-herramienta h2 {
+        color: #22c55e;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .fila-resultado {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-family: monospace;
+        text-align: center;
+        background-color: #0b1120;
+        color: #38bdf8;
+        border: 1px solid #334155;
+        border-radius: 8px;
+      }
+
+      .controles {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        background-color: #1e293b;
+        padding: 10px 15px;
+        border-radius: 8px;
+      }
+
+      select {
+        padding: 6px 10px;
+        border-radius: 6px;
+        background-color: #0b1120;
+        color: white;
+        border: 1px solid #38bdf8;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .btn-generar {
+        width: 100%;
+        background-color: #22c55e;
+        color: #0b1120;
+      }
+
+      .btn-generar:hover {
+        background-color: #16a34a;
+      }
+
+      .btn-copiar {
+        background-color: #38bdf8;
+        color: #0b1120;
+      }
+
+      .btn-copiar:hover {
+        background-color: #0284c7;
+        color: white;
+      }
+
+      /* Cuadros de información personal */
+      .caja-info {
+        background-color: #111827;
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+      }
+
+      .caja-info h2 {
+        color: #38bdf8;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #1e293b;
+        padding-bottom: 8px;
+      }
+
+      .caja-info h3 {
+        color: #22c55e;
+        margin: 15px 0 8px 0;
+        font-size: 1rem;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      footer {
+        text-align: center;
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-top: 25px;
+      }
+    </style>
   </head>
-  </body>
   <body>
-  
-  <h1 style="color: blue">PAGINA OFICIAL DE PRUEBA DE ALEJANDRO </h1>
-  <h2>esta pagina es una de prueba poemos usarlo para cualquier cosa para cifrar codigos, de manera productiva y eficaz usando esta pagína de prueba
- sin ocacionar daño a nadie </h2>
-<h1 style="color : blue"> ¿ QUIEN SOY? </h1>
-<ul>
-<li> soy un estuiante tengo 13 años vivo actualmente en lima,Peru hice esta pagina porque me gusta la tecnologia e informatica🧑 </li>
-  <li>comence a estudiar esto a los 12 años porque vi muvhas oportunidades de trabajo y vi un futuro por delante con mayor facilidad🎈 </li>
-  <li> mi objetivo principal es graduarme en ingenieria de sistemas y sacar un certificado </li>
-  </ul>
-<h1 style="color : "blue> ¿ PORQUE HAGO ESTO? y porque lo hicee? </h1>
-<h2 style="color : blue"> ¿porque hago esto? </h2>
-<ul>
-  <li> porque me apasiona la tecnologia y lo que es la seguridad 
-    <li> necesito trabajo y un futuro rentable y balanceado
-      <li> actualmente la tecnologia esta avanzando demas por ello debemos hacer que la ia avance gracias a nosotros 
+    <div class="contenedor">
+      <!-- ENCABEZADO -->
+      <header>
+        <h1>PÁGINA OFICIAL DE PRUEBA DE ALEJANDRO</h1>
+        <p class="subtitulo">
+          Laboratorio web para experimentar con código, cifrado y seguridad informática de manera productiva y ética.
+        </p>
+      </header>
+
+      <!-- HERRAMIENTA: GENERADOR DE CONTRASEÑAS -->
+      <section class="caja-herramienta">
+        <h2>🔐 Generador de Contraseñas Seguras</h2>
+
+        <div class="fila-resultado">
+          <input type="text" id="pantalla-clave" placeholder="Haz clic en Generar..." readonly />
+          <button class="btn-copiar" onclick="copiarClave()">Copiar</button>
+        </div>
+
+        <div class="controles">
+          <label for="largo">Cantidad de caracteres:</label>
+          <select id="largo">
+            <option value="8">8 caracteres</option>
+            <option value="12" selected>12 caracteres (Recomendado)</option>
+            <option value="16">16 caracteres</option>
+            <option value="20">20 caracteres (Máxima seguridad)</option>
+          </select>
+        </div>
+
+        <button class="btn-generar" onclick="generarClave()">Generar Nueva Contraseña</button>
+      </section>
+
+      <!-- SECCIÓN: QUIÉN SOY -->
+      <section class="caja-info">
+        <h2>¿Quién soy?</h2>
+        <ul>
+          <li>Soy un estudiante, tengo 13 años y vivo actualmente en Lima, Perú. Hice esta página porque me gusta la tecnología e informática.</li>
+          <li>Comencé a estudiar esto a los 12 años porque vi muchas oportunidades de trabajo y un futuro por delante con mayor facilidad.</li>
+          <li>Mi objetivo principal es graduarme en Ingeniería de Sistemas y sacar un certificado.</li>
         </ul>
-  <h2 style="color : blue"> ¿porque lo hice? </h2>
-        <ul> 
-          <li>hace mucho tiempo no tenia pasion por esto pero llegaron cosas que no entendia y esto me ayudo de mucho </li>
-          </ul>
-      </body
-    </html>
+      </section>
+
+      <!-- SECCIÓN: POR QUÉ HAGO ESTO -->
+      <section class="caja-info">
+        <h2>¿Por qué hago esto y por qué lo hice?</h2>
+        <h3>¿Por qué hago esto?</h3>
+        <ul>
+          <li>Porque me apasiona la tecnología y lo que es la seguridad.</li>
+          <li>Necesito trabajo y un futuro rentable y balanceado.</li>
+          <li>Actualmente la tecnología está avanzando de más, por ello debemos hacer que la IA avance gracias a nosotros.</li>
+        </ul>
+
+        <h3>¿Por qué lo hice?</h3>
+        <ul>
+          <li>Hace mucho tiempo no tenía pasión por esto, pero llegaron cosas que no entendía y esto me ayudó de mucho.</li>
+        </ul>
+      </section>
+
+      <footer>
+        Creado por Alejandro • Lima, Perú
+      </footer>
+    </div>
+
+    <!-- CÓDIGO JAVASCRIPT -->
+    <script>
+      function generarClave() {
+        const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*_-+=";
+        const longitud = document.getElementById("largo").value;
+        let clave = "";
+
+        for (let i = 0; i < longitud; i++) {
+          const numeroAzar = Math.floor(Math.random() * caracteres.length);
+          clave += caracteres[numeroAzar];
+        }
+
+        document.getElementById("pantalla-clave").value = clave;
+      }
+
+      function copiarClave() {
+        const pantalla = document.getElementById("pantalla-clave");
+        if (pantalla.value === "") {
+          alert("Primero genera una contraseña.");
+          return;
+        }
+        navigator.clipboard.writeText(pantalla.value);
+        alert("¡Contraseña copiada al portapapeles!");
+      }
+    </script>
+  </body>
+</html>
