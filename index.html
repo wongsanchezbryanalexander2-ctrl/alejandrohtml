@@ -144,5 +144,44 @@
       </div>
     </div>
   </div>
-</body>
+  <script>
+    const pantalla = document.querySelector(".pantalla");
+    const botones = document.querySelectorAll(".botones button");
+    let expresion = "";
+
+    botones.forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const valor = boton.textContent.trim();
+
+        if (valor === "C") {
+          expresion = "";
+          pantalla.value = "0";
+          return;
+        }
+
+        if (valor === "=") {
+          try {
+            const operacionLimpia = expresion
+              .replaceAll("×", "*")
+              .replaceAll("÷", "/");
+            if (!operacionLimpia) {
+              pantalla.value = "0";
+              return;
+            }
+            const resultado = Function('"use strict"; return (' + operacionLimpia + ')')();
+            pantalla.value = Number.isFinite(resultado) ? String(resultado) : "Error";
+            expresion = pantalla.value === "Error" ? "" : pantalla.value;
+          } catch {
+            pantalla.value = "Error";
+            expresion = "";
+          }
+          return;
+        }
+
+        expresion += valor;
+        pantalla.value = expresion;
+      });
+    });
+  </body>
+  </script>dy>
 </html>
