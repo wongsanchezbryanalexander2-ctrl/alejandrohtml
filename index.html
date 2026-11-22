@@ -1,187 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <title>CALCULADORA 3D</title>
-    <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #f8fafc;
-      margin: 0;
-      padding: 32px 16px;
-    }
-
-    .escena-3d {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      perspective: 1000px;
-    }
-
-    .calculadora {
-      width: 320px;
-      padding: 20px;
-      border-radius: 24px;
-      background: #1e293b;
-      transform-style: preserve-3d;
-      transform: rotateY(-18deg) rotateX(8deg);
-      box-shadow: -14px 18px 0 #090d16, -24px 30px 40px rgba(0, 0, 0, 0.55);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      margin-top: 20px;
-    }
-
-    .calculadora:hover {
-      transform: rotateY(14deg) rotateX(6deg);
-      box-shadow: 14px 18px 0 #090d16, 24px 30px 40px rgba(0, 0, 0, 0.55);
-    }
-
-    .pantalla {
-      width: 100%;
-      height: 68px;
-      box-sizing: border-box;
-      border: none;
-      border-radius: 12px;
-      background: #0f172a;
-      color: #38bdf8;
-      font-size: 2rem;
-      text-align: right;
-      padding: 0 14px;
-      margin-bottom: 18px;
-      transform: translateZ(12px);
-      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6);
-    }
-
-    .botones {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      transform-style: preserve-3d;
-    }
-
-    button {
-      height: 54px;
-      border: none;
-      border-radius: 12px;
-      background: #334155;
-      color: #ffffff;
-      font-size: 1.15rem;
-      font-weight: bold;
-      cursor: pointer;
-      transform: translateZ(18px);
-      box-shadow: 0 6px 0 #1e293b, 0 10px 14px rgba(0, 0, 0, 0.35);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
-    }
-
-    button:hover {
-      filter: brightness(1.12);
-    }
-
-    button:active {
-      transform: translateZ(8px) translateY(4px);
-      box-shadow: 0 2px 0 #1e293b, 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-accion {
-      background: #ef4444;
-      box-shadow: 0 6px 0 #991b1b, 0 10px 14px rgba(0, 0, 0, 0.35);
-    }
-
-    .btn-accion:active {
-      box-shadow: 0 2px 0 #991b1b, 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-operador {
-      background: #f59e0b;
-      color: #111827;
-      box-shadow: 0 6px 0 #b45309, 0 10px 14px rgba(0, 0, 0, 0.35);
-    }
-
-    .btn-operador:active {
-      box-shadow: 0 2px 0 #b45309, 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-igual {
-      background: #10b981;
-      color: #06281e;
-      box-shadow: 0 6px 0 #047857, 0 10px 14px rgba(0, 0, 0, 0.35);
-    }
-
-    .btn-igual:active {
-      box-shadow: 0 2px 0 #047857, 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-cero {
-      grid-column: span 2;
-    }
-  </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Ruleta Interactiva</title>
+</head>
 <body>
-  <div class="escena-3d">
-  <h1 style= "color : green">CALCULADORA 3D!📩!(hecho por alejandro el mas pro)</h1>
-  <H2 style= "color : blue">calcula numeros,para tranbajos cuentas etc DISFRUTALOO</H2>
-  <div class="calculadora"> <input type="text" class="pantalla" value="0" readonly /> 
-    <div class="botones">
-<button type="button" class="btn-accion">C</button>
-<button type="button" class="btn-operador">-</button>
-<button type="button" class="btn-operador">+</button>
-<button type="button" class="btn-operador">×</button>
-        <button type="button" class="btn-operador">÷</button>
+  <h1>RULETA INTERACTIVA</h1>
+  <p>Haz clic en girar para elegir una opción al azar.</p>
 
-        <button type="button">7</button>
-        <button type="button">8</button>
-        <button type="button">9</button>
-        <button type="button" class="btn-igual">=</button>
-
-        <button type="button">4</button>
-        <button type="button">5</button>
-        <button type="button">6</button>
-        <button type="button">.</button>
-
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button">3</button>
-        <button type="button" class="btn-cero">0</button>
-      </div>
-    </div>
+  <div class="zona-ruleta">
+    <div class="puntero">▼</div>
+    <div class="ruleta"></div>
   </div>
-  <script>
-    const pantalla = document.querySelector(".pantalla");
-    const botones = document.querySelectorAll(".botones button");
-    let expresion = "";
 
-    botones.forEach((boton) => {
-      boton.addEventListener("click", () => {
-        const valor = boton.textContent.trim();
-
-        if (valor === "C") {
-          expresion = "";
-          pantalla.value = "0";
-          return;
-        }
-
-        if (valor === "=") {
-          try {
-            const operacionLimpia = expresion
-              .replaceAll("×", "*")
-              .replaceAll("÷", "/");
-            if (!operacionLimpia) {
-              pantalla.value = "0";
-              return;
-            }
-            const resultado = Function('"use strict"; return (' + operacionLimpia + ')')();
-            pantalla.value = Number.isFinite(resultado) ? String(resultado) : "Error";
-            expresion = pantalla.value === "Error" ? "" : pantalla.value;
-          } catch {
-            pantalla.value = "Error";
-            expresion = "";
-          }
-          return;
-        }
-
-        expresion += valor;
-        pantalla.value = expresion;
-      });
-    });
-  </script>
+  <button type="button" id="girar">GIRAR</button>
+  <p id="resultado">Resultado: —</p>
 </body>
 </html>
