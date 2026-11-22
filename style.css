@@ -1,1 +1,114 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+  --color-principal: #22c55e;   /* verde "hacker" — cámbialo si quieres */
+  --color-fondo: #0b1120;
+  --color-caja: #1e293b;
+  --color-texto: #e2e8f0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+section { padding: 70px 20px; max-width: 1000px; margin: auto; }
+h2 { color: var(--color-principal); margin-bottom: 20px; font-size: 30px; }
+
+/* CABECERA */
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: var(--color-caja);
+  position: sticky;
+  top: 0;
+}
+.logo { font-family: monospace; color: var(--color-principal); font-size: 22px; }
+.menu a {
+  color: var(--color-texto);
+  text-decoration: none;
+  margin-left: 22px;
+}
+.menu a:hover { color: var(--color-principal); }
+
+/* PORTADA */
+.portada { text-align: center; padding: 130px 20px; }
+.saludo { font-family: monospace; color: var(--color-principal); }
+.portada h2 { font-size: 56px; color: white; margin: 5px 0; }
+.rol { font-size: 20px; margin-bottom: 30px; }
+
+/* BOTÓN */
+.boton {
+  display: inline-block;
+  background: var(--color-principal);
+  color: #0b1120;
+  font-weight: bold;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.boton:hover { transform: scale(1.05); opacity: 0.85; }
+
+/* SOBRE MÍ */
+.sobre-mi { display: flex; align-items: center; gap: 40px; }
+.sobre-mi img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--color-principal);
+}
+.sobre-mi p { margin-bottom: 12px; }
+
+/* TARJETAS */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.tarjeta {
+  background: var(--color-caja);
+  padding: 25px;
+  border-radius: 12px;
+  border-top: 3px solid var(--color-principal);
+  transition: 0.3s;
+}
+.tarjeta:hover { transform: translateY(-6px); }
+.icono { font-size: 32px; }
+.tarjeta h3 { margin: 10px 0; }
+
+/* LISTA DE METAS */
+.lista { list-style: none; }
+.lista li {
+  background: var(--color-caja);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--color-principal);
+  border-radius: 6px;
+}
+
+/* CONTACTO */
+.redes { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+
+/* PIE */
+.pie {
+  text-align: center;
+  padding: 25px;
+  background: var(--color-caja);
+  font-size: 14px;
+}
+
+/* CELULAR */
+@media (max-width: 700px) {
+  .cabecera { flex-direction: column; gap: 10px; padding: 15px; }
+  .menu a { margin: 0 8px; font-size: 14px; }
+  .sobre-mi { flex-direction: column; text-align: center; }
+  .portada h2 { font-size: 40px; }
+}
