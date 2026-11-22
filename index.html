@@ -3,33 +3,204 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Página de prueba de Alejandro</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <title>Alejandro | Tecnología &amp; Ciberseguridad</title>
+    <!-- Tipografía profesional desde Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link
+      href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-main: #090d16;
+        --bg-card: #111827;
+        --border-color: #1f2937;
+        --accent-blue: #38bdf8;
+        --accent-green: #10b981;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg-main);
+        background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.08), transparent 40%),
+          radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.08), transparent 40%);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        line-height: 1.7;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 850px;
+        margin: 0 auto;
+      }
+
+      /* Cabecera Hero */
+      header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 40px 32px;
+        margin-bottom: 32px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+      }
+
+      .badge {
+        display: inline-block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--accent-green);
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 16px;
+        color: #ffffff;
+      }
+
+      .intro {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+      }
+
+      /* Tarjetas de sección */
+      section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 32px;
+        margin-bottom: 24px;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      section:hover {
+        border-color: #374151;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+        color: var(--accent-blue);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.95rem;
+        color: var(--accent-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 24px 0 12px 0;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 14px;
+        color: var(--text-main);
+      }
+
+      li::before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        color: var(--accent-green);
+        font-weight: bold;
+      }
+
+      footer {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-top: 40px;
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      /* Adaptación para celulares */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+        header,
+        section {
+          padding: 24px 20px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>PÁGINA OFICIAL DE PRUEBA DE ALEJANDRO</h1>
-    <p>
-      Esta página es una de prueba; podemos usarla para cualquier cosa, como cifrar códigos de manera productiva y eficaz sin ocasionar daño a nadie.
-    </p>
+    <div class="container">
+      <header>
+        <span class="badge">&lt;SYSTEM_ONLINE // LIMA_PE /&gt;</span>
+        <h1>PÁGINA OFICIAL DE PRUEBA DE ALEJANDRO</h1>
+        <p class="intro">
+          Entorno de desarrollo y laboratorio digital creado para experimentar con código, ciberseguridad y herramientas de cifrado de forma ética, productiva y segura.
+        </p>
+      </header>
 
-    <h2>¿QUIÉN SOY?</h2>
-    <ul>
-      <li>Soy un estudiante, tengo 13 años y vivo actualmente en Lima, Perú. Hice esta página porque me gusta la tecnología e informática.</li>
-      <li>Comencé a estudiar esto a los 12 años porque vi muchas oportunidades de trabajo y un futuro por delante con mayor facilidad.</li>
-      <li>Mi objetivo principal es graduarme en Ingeniería de Sistemas y sacar un certificado.</li>
-    </ul>
+      <main>
+        <section>
+          <h2>¿Quién soy?</h2>
+          <ul>
+            <li>Soy estudiante, tengo 13 años y vivo actualmente en Lima, Perú. Creé este espacio web porque me apasiona la tecnología y la informática.</li>
+            <li>Comencé a estudiar programación y sistemas a los 12 años al descubrir el enorme potencial profesional y el futuro que ofrece esta industria.</li>
+            <li>Mi meta principal es graduarme en <strong>Ingeniería de Sistemas</strong> y obtener certificaciones especializadas.</li>
+          </ul>
+        </section>
 
-    <h2>¿POR QUÉ HAGO ESTO Y POR QUÉ LO HICE?</h2>
-    <h3>¿Por qué hago esto?</h3>
-    <ul>
-      <li>Porque me apasiona la tecnología y lo que es la seguridad.</li>
-      <li>Necesito trabajo y un futuro rentable y balanceado.</li>
-      <li>Actualmente la tecnología está avanzando de más, por ello debemos hacer que la IA avance gracias a nosotros.</li>
-    </ul>
+        <section>
+          <h2>Visión y Propósito</h2>
 
-    <h3>¿Por qué lo hice?</h3>
-    <ul>
-      <li>Hace mucho tiempo no tenía pasión por esto, pero llegaron cosas que no entendía y esto me ayudó de mucho.</li>
-    </ul>
+          <h3>// ¿Por qué hago esto?</h3>
+          <ul>
+            <li>Me apasiona la tecnología, el desarrollo de software y la seguridad informática.</li>
+            <li>Busco construir una carrera sólida, rentable y balanceada para mi futuro.</li>
+            <li>La tecnología avanza cada día más rápido, y mi objetivo es dominar herramientas como la Inteligencia Artificial para impulsar soluciones útiles.</li>
+          </ul>
+
+          <h3>// ¿Por qué lo hice?</h3>
+          <ul>
+            <li>Al principio no tenía claro qué rumbo tomar, pero al enfrentarme a retos técnicos que no entendía, investigar y programar se convirtió en mi mayor motivación.</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer>
+        Desarrollado por Alejandro • Proyecto de práctica HTML5 &amp; CSS3
+      </footer>
+    </div>
   </body>
 </html>
