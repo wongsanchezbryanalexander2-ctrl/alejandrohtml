@@ -2,7 +2,118 @@
 <html lang="es">
   <head>
     <title>CALCULADORA 3D</title>
-    
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 32px 16px;
+    }
+
+    .escena-3d {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .calculadora {
+      width: 320px;
+      padding: 20px;
+      border-radius: 24px;
+      background: #1e293b;
+      transform-style: preserve-3d;
+      transform: rotateY(-18deg) rotateX(8deg);
+      box-shadow: -14px 18px 0 #090d16, -24px 30px 40px rgba(0, 0, 0, 0.55);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      margin-top: 20px;
+    }
+
+    .calculadora:hover {
+      transform: rotateY(14deg) rotateX(6deg);
+      box-shadow: 14px 18px 0 #090d16, 24px 30px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .pantalla {
+      width: 100%;
+      height: 68px;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #38bdf8;
+      font-size: 2rem;
+      text-align: right;
+      padding: 0 14px;
+      margin-bottom: 18px;
+      transform: translateZ(12px);
+      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .botones {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      transform-style: preserve-3d;
+    }
+
+    button {
+      height: 54px;
+      border: none;
+      border-radius: 12px;
+      background: #334155;
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      transform: translateZ(18px);
+      box-shadow: 0 6px 0 #1e293b, 0 10px 14px rgba(0, 0, 0, 0.35);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      filter: brightness(1.12);
+    }
+
+    button:active {
+      transform: translateZ(8px) translateY(4px);
+      box-shadow: 0 2px 0 #1e293b, 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-accion {
+      background: #ef4444;
+      box-shadow: 0 6px 0 #991b1b, 0 10px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-accion:active {
+      box-shadow: 0 2px 0 #991b1b, 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-operador {
+      background: #f59e0b;
+      color: #111827;
+      box-shadow: 0 6px 0 #b45309, 0 10px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-operador:active {
+      box-shadow: 0 2px 0 #b45309, 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-igual {
+      background: #10b981;
+      color: #06281e;
+      box-shadow: 0 6px 0 #047857, 0 10px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn-igual:active {
+      box-shadow: 0 2px 0 #047857, 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-cero {
+      grid-column: span 2;
+    }
+  </style>
   </head>
 <body>
   <div class="escena-3d">
