@@ -85,5 +85,85 @@
 
   <button type="button" id="girar">GIRAR</button>
   <p id="resultado">Resultado: —</p>
+  <div class="controles-opciones" style="margin-top: 20px;">
+    <input type="text" id="nueva-opcion" placeholder="Escribe una opción..." style="padding: 10px 12px; border-radius: 8px; border: none; font-size: 1rem;" />
+    <button type="button" id="agregar-opcion" style="padding: 10px 16px; border-radius: 8px; border: none; background: #38bdf8; color: #0f172a; font-weight: bold; cursor: pointer;">Agregar</button>
+    <button type="button" id="quitar-opcion" style="padding: 10px 14px; border-radius: 8px; border: none; background: #ef4444; color: #ffffff; font-weight: bold; cursor: pointer;">Quitar última</button>
+  </div>
+  <p id="lista-opciones" style="margin-top: 12px; color: #cbd5e1; font-size: 0.95rem;"></p>
+
+  <script>
+    const ruleta = document.querySelector(".ruleta");
+    const btnGirar = document.getElementById("girar");
+    const resultado = document.getElementById("resultado");
+    const inputOpcion = document.getElementById("nueva-opcion");
+    const btnAgregar = document.getElementById("agregar-opcion");
+    const btnQuitar = document.getElementById("quitar-opcion");
+    const listaTexto = document.getElementById("lista-opciones");
+
+    const colores = ["#ef4444", "#f59e0b", "#10b981", "#06b6d4", "#8b5cf6", "#ec4899"];
+    let opciones = ["Opción 1", "Opción 2", "Opción 3", "Opción 4", "Opción 5", "Opción 6"];
+    let anguloActual = 0;
+    let girando = false;
+
+    function actualizarRuleta() {
+      const total = opciones.length;
+      const paso = 360 / total;
+      const tramos = opciones.map((_, i) => {
+        const inicio = (i * paso).toFixed(2);
+        const fin = ((i + 1) * paso).toFixed(2);
+        const color = colores[i % colores.length];
+        return `${color} ${inicio}deg ${fin}deg`;
+      });
+
+      ruleta.style.background = `conic-gradient(${tramos.join(", ")})`;
+      listaTexto.textContent = "Opciones actuales: " + opciones.join(" · ");
+    }
+
+    function agregarOpcion() {
+      const texto = inputOpcion.value.trim();
+      if (!texto || girando) return;
+      opciones.push(texto);
+      inputOpcion.value = "";
+      actualizarRuleta();
+    }
+
+    btnAgregar.addEventListener("click", agregarOpcion);
+    inputOpcion.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") agregarOpcion();
+    });
+
+    btnQuitar.addEventListener("click", () => {
+      if (girando || opciones.length <= 2) return;
+      opciones.pop();
+      actualizarRuleta();
+    });
+
+    btnGirar.addEventListener("click", () => {
+      if (girando || opciones.length === 0) return;
+      girando = true;
+      btnGirar.disabled = true;
+      resultado.textContent = "Resultado: Girando...";
+
+      const vueltasExtra = 360 * 5;
+      const giroAleatorio = Math.floor(Math.random() * 360);
+      anguloActual += vueltasExtra + giroAleatorio;
+      ruleta.style.transform = `rotate(${anguloActual}deg)`;
+
+      setTimeout(() => {
+        const total = opciones.length;
+        const paso = 360 / total;
+        const anguloNormalizado = ((anguloActual % 360) + 360) % 360;
+        const anguloEnPuntero = (360 - anguloNormalizado) % 360;
+        const indiceGanador = Math.floor(anguloEnPuntero / paso) % total;
+
+        resultado.textContent = "Resultado: " + opciones[indiceGanador];
+        girando = false;
+        btnGirar.disabled = false;
+      }, 4000);
+    });
+
+    actualizarRuleta();
+  </script>
 </body>
 </html>
