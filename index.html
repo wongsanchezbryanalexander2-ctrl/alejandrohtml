@@ -57,6 +57,13 @@ button:hover {
       <input type="text" id="input-ip" placeholder="Ej: 8.8.8.8">
       <button id="btn-buscar">Buscar IP</button>
       <div id="resultado"></div>
+      <script>
+      async function rastrearIP() { 
+        const ip = inputIP.value.trim();
+        if (ip === "") {
+          cajaResultado.innerHTML = "<p>Por Fvaor imgrese una ip valida.</p>;
+            return;
+        }
     </div>
   </body>
 </html>
