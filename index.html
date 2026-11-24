@@ -64,6 +64,26 @@ button:hover {
           cajaResultado.innerHTML = "<p>Por Fvaor imgrese una ip valida.</p>;
             return;
         }
+          cajaResultado.innerHTML = "<p>Rastreando IP...</p>";
+
+  try {
+    const respuesta = await fetch(`https://ipapi.co/${ip}/json/`);
+    const datos = await respuesta.json();
+    if (datos.error) {
+      cajaResultado.innerHTML = `<p>Error: ${datos.reason}</p>`;
+      return;
+    }
+      cajaResultado.innerHTML = `
+      <p><strong>IP:</strong> ${datos.ip}</p>
+      <p><strong>País:</strong> ${datos.country_name}</p>
+      <p><strong>Ciudad:</strong> ${datos.city}</p>
+      <p><strong>Proveedor (ISP):</strong> ${datos.org}</p>
+      <p><strong>Coordenadas:</strong> ${datos.latitude}, ${datos.longitude}</p>
+    `;
+  } catch (error) {
+    cajaResultado.innerHTML = "<p>Error de conexión al consultar la API.</p>";
+  }
+}
     </div>
   </body>
 </html>
