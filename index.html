@@ -58,32 +58,47 @@ button:hover {
       <button id="btn-buscar">Buscar IP</button>
       <div id="resultado"></div>
       <script>
-      async function rastrearIP() { 
-        const ip = inputIP.value.trim();
-        if (ip === "") {
-          cajaResultado.innerHTML = "<p>Por Fvaor imgrese una ip valida.</p>;
-            return;
-        }
-          cajaResultado.innerHTML = "<p>Rastreando IP...</p>";
+      // 1. Conectamos los elementos HTML con JavaScript
+      const inputIp = document.getElementById("input-ip");
+      const btnBuscar = document.getElementById("btn-buscar");
+      const cajaResultado = document.getElementById("resultado");
 
-  try {
-    const respuesta = await fetch(`https://ipapi.co/${ip}/json/`);
-    const datos = await respuesta.json();
-    if (datos.error) {
-      cajaResultado.innerHTML = `<p>Error: ${datos.reason}</p>`;
-      return;
-    }
-      cajaResultado.innerHTML = `
-      <p><strong>IP:</strong> ${datos.ip}</p>
-      <p><strong>País:</strong> ${datos.country_name}</p>
-      <p><strong>Ciudad:</strong> ${datos.city}</p>
-      <p><strong>Proveedor (ISP):</strong> ${datos.org}</p>
-      <p><strong>Coordenadas:</strong> ${datos.latitude}, ${datos.longitude}</p>
-    `;
-  } catch (error) {
-    cajaResultado.innerHTML = "<p>Error de conexión al consultar la API.</p>";
-  }
-}
+      // 2. Le decimos al botón que ejecute rastrearIP al hacer clic
+      btnBuscar.addEventListener("click", rastrearIP);
+
+      // 3. Función principal
+      async function rastrearIP() {
+        const ip = inputIp.value.trim();
+
+        if (ip === "") {
+          cajaResultado.innerHTML = "<p>Por favor, ingresa una IP válida.</p>";
+          return;
+        }
+
+        cajaResultado.innerHTML = "<p>Rastreando IP...</p>";
+
+        try {
+          const respuesta = await fetch(`https://ipapi.co/${ip}/json/`);
+          const datos = await respuesta.json();
+
+          if (datos.error) {
+            cajaResultado.innerHTML = `<p>Error: ${datos.reason}</p>`;
+            return;
+          }
+
+          cajaResultado.innerHTML = `
+            <p><strong>IP:</strong> ${datos.ip}</p>
+            <p><strong>País:</strong> ${datos.country_name}</p>
+            <p><strong>Ciudad:</strong> ${datos.city}</p>
+            <p><strong>Proveedor (ISP):</strong> ${datos.org}</p>
+            <p><strong>Coordenadas:</strong> ${datos.latitude}, ${datos.longitude}</p>
+          `;
+        } catch (error) {
+          cajaResultado.innerHTML = "<p>Error de conexión al consultar la API.</p>";
+        }
+      }
+    </script>
+
     </div>
   </body>
 </html>
