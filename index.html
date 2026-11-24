@@ -18,8 +18,7 @@
         max-width: 450px;
         margin: 80px auto;
       }
-
-      /* Barra superior de pestañas */
+      
       .pestanas {
         display: flex;
         gap: 10px;
@@ -39,7 +38,6 @@
         cursor: pointer;
       }
 
-      /* Estilo de la pestaña seleccionada */
       .btn-tab.activa {
         background-color: #A10A0E;
         color: #1A1717;
@@ -78,14 +76,13 @@
   </head>
   <body>
 
-    <div class="caja">
-      <!-- Botones para cambiar de pestaña -->
+    <div class="caja">--
+
       <div class="pestanas">
         <button id="tab-ip" class="btn-tab activa">Rastrear IP</button>
         <button id="tab-tel" class="btn-tab">Rastrear Teléfono</button>
       </div>
-
-      <!-- SECCIÓN 1: RASTREADOR DE IP (Visible por defecto) -->
+      
       <div id="seccion-ip">
         <h1>Rastreador de IP</h1>
         <input type="text" id="input-ip" placeholder="Ej: 8.8.8.8">
@@ -93,7 +90,6 @@
         <div id="resultado-ip" class="resultado"></div>
       </div>
 
-      <!-- SECCIÓN 2: RASTREADOR DE TELÉFONO (Oculta al inicio) -->
       <div id="seccion-tel" style="display: none;">
         <h1>Rastreador Telefónico</h1>
         <input type="text" id="input-tel" placeholder="Ej: +51987654321">
@@ -103,7 +99,6 @@
     </div>
 
     <script>
-      // --- 1. LÓGICA DE PESTAÑAS ---
       const tabIp = document.getElementById("tab-ip");
       const tabTel = document.getElementById("tab-tel");
       const seccionIp = document.getElementById("seccion-ip");
@@ -123,7 +118,6 @@
         tabIp.classList.remove("activa");
       });
 
-      // --- 2. LÓGICA RASTREADOR DE IP ---
       const inputIp = document.getElementById("input-ip");
       const btnBuscarIp = document.getElementById("btn-buscar-ip");
       const resIp = document.getElementById("resultado-ip");
@@ -157,14 +151,13 @@
         }
       });
 
-      // --- 3. LÓGICA RASTREADOR DE TELÉFONO ---
       const inputTel = document.getElementById("input-tel");
       const btnBuscarTel = document.getElementById("btn-buscar-tel");
       const resTel = document.getElementById("resultado-tel");
 
       btnBuscarTel.addEventListener("click", async () => {
         const numero = inputTel.value.trim();
-        const apiKey = "PEGA_TU_API_KEY_AQUI"; // Reemplazar con tu clave gratuita de AbstractAPI
+        const apiKey = "pegar api key";
 
         if (numero === "") {
           resTel.innerHTML = "<p>Por favor, ingresa un número con código de país (ej: +51...).</p>";
