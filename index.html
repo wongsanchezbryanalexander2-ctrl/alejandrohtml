@@ -2,91 +2,150 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8">
-    <title>Rastreador de IP</title>
+    <title>Rastreador OSINT - IP y Teléfono</title>
     <style>
       body {
         background-color: #1A1717;
         color: #267800;
+        font-family: sans-serif;
       }
+
       .caja {
         background-color: #121010;
         border: 2px solid #267800;
         border-radius: 10px;
-        padding: 25px; 
-        max-width: 450px; 
+        padding: 25px;
+        max-width: 450px;
         margin: 80px auto;
       }
+
+      /* Barra superior de pestañas */
+      .pestanas {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #267800;
+        padding-bottom: 12px;
+      }
+
+      .btn-tab {
+        flex: 1;
+        background-color: #1A1717;
+        color: #267800;
+        border: 1px solid #267800;
+        border-radius: 6px;
+        padding: 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      /* Estilo de la pestaña seleccionada */
+      .btn-tab.activa {
+        background-color: #267800;
+        color: #1A1717;
+      }
+
       input {
         background-color: #1A1717;
-  color: #4ade80;
-  border: 1px solid #267800;
-  border-radius: 6px;
-  padding: 10px;
-  width: 65%;
-  outline: none;
-}
-      button {
-  background-color: #267800;
-  color: #1A1717;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
+        color: #4ade80;
+        border: 1px solid #267800;
+        border-radius: 6px;
+        padding: 10px;
+        width: 65%;
+        outline: none;
+      }
 
-button:hover {
-  background-color: #267800;
-  color: #1A1717;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
+      .btn-accion {
+        background-color: #267800;
+        color: #1A1717;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-button:hover {
-  background-color: #4ade80;
-}
+      .btn-accion:hover {
+        background-color: #4ade80;
+      }
+
+      .resultado {
+        margin-top: 20px;
+        color: #4ade80;
+        line-height: 1.6;
+      }
     </style>
   </head>
   <body>
 
     <div class="caja">
-      <h1>Rastreador de IP</h1>
-      <input type="text" id="input-ip" placeholder="Ej: 8.8.8.8">
-      <button id="btn-buscar">Buscar IP</button>
-      <div id="resultado"></div>
-      <script>
-      // 1. Conectamos los elementos HTML con JavaScript
+      <!-- Botones para cambiar de pestaña -->
+      <div class="pestanas">
+        <button id="tab-ip" class="btn-tab activa">Rastrear IP</button>
+        <button id="tab-tel" class="btn-tab">Rastrear Teléfono</button>
+      </div>
+
+      <!-- SECCIÓN 1: RASTREADOR DE IP (Visible por defecto) -->
+      <div id="seccion-ip">
+        <h1>Rastreador de IP</h1>
+        <input type="text" id="input-ip" placeholder="Ej: 8.8.8.8">
+        <button id="btn-buscar-ip" class="btn-accion">Buscar IP</button>
+        <div id="resultado-ip" class="resultado"></div>
+      </div>
+
+      <!-- SECCIÓN 2: RASTREADOR DE TELÉFONO (Oculta al inicio) -->
+      <div id="seccion-tel" style="display: none;">
+        <h1>Rastreador Telefónico</h1>
+        <input type="text" id="input-tel" placeholder="Ej: +51987654321">
+        <button id="btn-buscar-tel" class="btn-accion">Buscar Tel</button>
+        <div id="resultado-tel" class="resultado"></div>
+      </div>
+    </div>
+
+    <script>
+      // --- 1. LÓGICA DE PESTAÑAS ---
+      const tabIp = document.getElementById("tab-ip");
+      const tabTel = document.getElementById("tab-tel");
+      const seccionIp = document.getElementById("seccion-ip");
+      const seccionTel = document.getElementById("seccion-tel");
+
+      tabIp.addEventListener("click", () => {
+        seccionIp.style.display = "block";
+        seccionTel.style.display = "none";
+        tabIp.classList.add("activa");
+        tabTel.classList.remove("activa");
+      });
+
+      tabTel.addEventListener("click", () => {
+        seccionIp.style.display = "none";
+        seccionTel.style.display = "block";
+        tabTel.classList.add("activa");
+        tabIp.classList.remove("activa");
+      });
+
+      // --- 2. LÓGICA RASTREADOR DE IP ---
       const inputIp = document.getElementById("input-ip");
-      const btnBuscar = document.getElementById("btn-buscar");
-      const cajaResultado = document.getElementById("resultado");
+      const btnBuscarIp = document.getElementById("btn-buscar-ip");
+      const resIp = document.getElementById("resultado-ip");
 
-      // 2. Le decimos al botón que ejecute rastrearIP al hacer clic
-      btnBuscar.addEventListener("click", rastrearIP);
-
-      // 3. Función principal
-      async function rastrearIP() {
+      btnBuscarIp.addEventListener("click", async () => {
         const ip = inputIp.value.trim();
-
         if (ip === "") {
-          cajaResultado.innerHTML = "<p>Por favor, ingresa una IP válida.</p>";
+          resIp.innerHTML = "<p>Por favor, ingresa una IP válida.</p>";
           return;
         }
-
-        cajaResultado.innerHTML = "<p>Rastreando IP...</p>";
+        resIp.innerHTML = "<p>Rastreando IP...</p>";
 
         try {
           const respuesta = await fetch(`https://ipapi.co/${ip}/json/`);
           const datos = await respuesta.json();
 
           if (datos.error) {
-            cajaResultado.innerHTML = `<p>Error: ${datos.reason}</p>`;
+            resIp.innerHTML = `<p>Error: ${datos.reason}</p>`;
             return;
           }
 
-          cajaResultado.innerHTML = `
+          resIp.innerHTML = `
             <p><strong>IP:</strong> ${datos.ip}</p>
             <p><strong>País:</strong> ${datos.country_name}</p>
             <p><strong>Ciudad:</strong> ${datos.city}</p>
@@ -94,11 +153,52 @@ button:hover {
             <p><strong>Coordenadas:</strong> ${datos.latitude}, ${datos.longitude}</p>
           `;
         } catch (error) {
-          cajaResultado.innerHTML = "<p>Error de conexión al consultar la API.</p>";
+          resIp.innerHTML = "<p>Error de conexión al consultar la API.</p>";
         }
-      }
+      });
+
+      // --- 3. LÓGICA RASTREADOR DE TELÉFONO ---
+      const inputTel = document.getElementById("input-tel");
+      const btnBuscarTel = document.getElementById("btn-buscar-tel");
+      const resTel = document.getElementById("resultado-tel");
+
+      btnBuscarTel.addEventListener("click", async () => {
+        const numero = inputTel.value.trim();
+        const apiKey = "PEGA_TU_API_KEY_AQUI"; // Reemplazar con tu clave gratuita de AbstractAPI
+
+        if (numero === "") {
+          resTel.innerHTML = "<p>Por favor, ingresa un número con código de país (ej: +51...).</p>";
+          return;
+        }
+
+        if (apiKey === "PEGA_TU_API_KEY_AQUI") {
+          resTel.innerHTML = "<p>Falta configurar tu API Key gratuita de AbstractAPI en el código.</p>";
+          return;
+        }
+
+        resTel.innerHTML = "<p>Consultando número...</p>";
+
+        try {
+          const respuesta = await fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=${apiKey}&phone=${encodeURIComponent(numero)}`);
+          const datos = await respuesta.json();
+
+          if (datos.error) {
+            resTel.innerHTML = `<p>Error: ${datos.error.message}</p>`;
+            return;
+          }
+
+          resTel.innerHTML = `
+            <p><strong>Número:</strong> ${datos.format.international || numero}</p>
+            <p><strong>Válido:</strong> ${datos.valid ? "Sí" : "No"}</p>
+            <p><strong>País:</strong> ${datos.country.name || "Desconocido"}</p>
+            <p><strong>Operadora:</strong> ${datos.carrier || "No disponible"}</p>
+            <p><strong>Tipo de línea:</strong> ${datos.type || "Desconocido"}</p>
+          `;
+        } catch (error) {
+          resTel.innerHTML = "<p>Error de conexión al consultar el número.</p>";
+        }
+      });
     </script>
 
-    </div>
   </body>
 </html>
