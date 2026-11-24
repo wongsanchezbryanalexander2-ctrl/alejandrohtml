@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa: #ff6b9d;
+      --rosa-claro: #ffd6e5;
+      --rojo: #e63964;
+      --crema: #fff8f0;
+      --texto: #5a2a3a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec 0%, #ffc2d6 50%, #ffb3c9 100%);
+      min-height: 100vh;
+      color: var(--texto);
+      overflow-x: hidden;
+    }
+
+    /* ---------- Corazones flotando de fondo ---------- */
+    .corazon-fondo {
+      position: fixed;
+      bottom: -40px;
+      pointer-events: none;
+      animation: subir linear forwards;
+      z-index: 0;
+      opacity: 0.7;
+    }
+    @keyframes subir {
+      to { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+    }
+
+    /* ---------- Pantallas ---------- */
+    .pantalla {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      text-align: center;
+    }
+    .pantalla.activa { display: flex; animation: aparecer 0.9s ease; }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2 {
+      font-family: 'Dancing Script', cursive;
+      color: var(--rojo);
+    }
+    h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); margin-bottom: 10px; }
+    h2 { font-size: clamp(2rem, 6vw, 2.8rem); margin-bottom: 24px; }
+
+    .boton {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: var(--rojo);
+      color: white;
+      border: none;
+      padding: 14px 34px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(230, 57, 100, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 28px;
+    }
+    .boton:hover { transform: scale(1.06); box-shadow: 0 8px 24px rgba(230, 57, 100, 0.5); }
+
+    /* ---------- 1. Sobre ---------- */
+    .sobre {
+      position: relative;
+      width: 280px;
+      height: 185px;
+      background: var(--rosa);
+      border-radius: 0 0 12px 12px;
+      margin-top: 30px;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(180, 40, 80, 0.3);
+      animation: latido 1.6s ease-in-out infinite;
+    }
+    .sobre::before { /* solapa */
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 105px solid #ff8fb3;
+      transform-origin: top;
+      transition: transform 0.6s;
+      z-index: 2;
+    }
+    .sobre.abierto::before { transform: rotateX(180deg); }
+    .sobre .sello {
+      position: absolute;
+      top: 78px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.6rem;
+      z-index: 3;
+      transition: opacity 0.3s;
+    }
+    .sobre.abierto .sello { opacity: 0; }
+    @keyframes latido {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .pista { margin-top: 22px; font-size: 0.95rem; opacity: 0.8; }
+
+    /* ---------- 2. Carta ---------- */
+    .carta {
+      background: var(--crema);
+      max-width: 560px;
+      width: 100%;
+      padding: 40px 32px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(180, 40, 80, 0.25);
+      text-align: left;
+      position: relative;
+    }
+    .carta::after {
+      content: '💕';
+      position: absolute;
+      top: -18px; right: -12px;
+      font-size: 2.4rem;
+    }
+    .carta h2 { text-align: center; }
+    #texto-carta {
+      font-size: 1.12rem;
+      line-height: 1.8;
+      white-space: pre-line;
+      min-height: 200px;
+    }
+    #texto-carta::after {
+      content: '|';
+      animation: parpadeo 0.8s infinite;
+      color: var(--rosa);
+    }
+    #texto-carta.listo::after { content: ''; }
+    @keyframes parpadeo { 50% { opacity: 0; } }
+    .firma {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      text-align: right;
+      margin-top: 18px;
+      color: var(--rojo);
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    .firma.visible { opacity: 1; }
+    #btn-carta { display: none; margin-left: auto; margin-right: auto; }
+
+    /* ---------- 3. Contador ---------- */
+    .contador {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .unidad {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 16px;
+      min-width: 100px;
+      box-shadow: 0 8px 20px rgba(180, 40, 80, 0.2);
+    }
+    .unidad .numero {
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--rojo);
+      display: block;
+    }
+    .unidad .etiqueta { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+    .subtitulo { font-size: 1.1rem; max-width: 460px; margin: 0 auto 28px; line-height: 1.6; }
+
+    /* ---------- 4. Razones (tarjetas que giran) ---------- */
+    .razones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      max-width: 720px;
+      width: 100%;
+    }
+    .tarjeta {
+      height: 160px;
+      perspective: 800px;
+      cursor: pointer;
+    }
+    .tarjeta-interior {
+      position: relative;
+      width: 100%; height: 100%;
+      transition: transform 0.7s;
+      transform-style: preserve-3d;
+    }
+    .tarjeta.girada .tarjeta-interior { transform: rotateY(180deg); }
+    .cara {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      box-shadow: 0 6px 16px rgba(180, 40, 80, 0.2);
+    }
+    .frente {
+      background: var(--rosa);
+      color: white;
+      font-size: 2.6rem;
+      flex-direction: column;
+    }
+    .frente small { font-size: 0.85rem; margin-top: 6px; }
+    .reverso {
+      background: white;
+      transform: rotateY(180deg);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* ---------- 5. Pregunta final ---------- */
+    .botones-final {
+      position: relative;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      min-height: 90px;
+      width: 100%;
+      max-width: 400px;
+    }
+    #btn-no {
+      background: #c9c9c9;
+      box-shadow: none;
+      transition: left 0.25s, top 0.25s;
+    }
+    .gigante { font-size: clamp(4rem, 15vw, 7rem); animation: latido 1s infinite; }
+
+    @media (max-width: 480px) {
+      .carta { padding: 32px 20px; }
+      .unidad { min-width: 80px; padding: 16px 10px; }
+      .unidad .numero { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. EL SOBRE -->
+  <section class="pantalla activa" id="p-sobre">
+    <h1>Para ti, <span class="nombre-ella"></span> 💌</h1>
+    <p>Tengo algo que decirte...</p>
+    <div class="sobre" id="sobre">
+      <span class="sello">❤️</span>
+    </div>
+    <p class="pista">(toca el sobre)</p>
+  </section>
+
+  <!-- 2. LA CARTA -->
+  <section class="pantalla" id="p-carta">
+    <div class="carta">
+      <h2>Mi amor</h2>
+      <p id="texto-carta"></p>
+      <p class="firma" id="firma"></p>
+      <button class="boton" id="btn-carta">Hay más... →</button>
+    </div>
+  </section>
+
+  <!-- 3. EL CONTADOR -->
+  <section class="pantalla" id="p-contador">
+    <h2>Nuestro tiempo juntos</h2>
+    <p class="subtitulo">Desde el día que dijiste que sí, cada segundo ha valido la pena:</p>
+    <div class="contador">
+      <div class="unidad"><span class="numero" id="c-dias">0</span><span class="etiqueta">días</span></div>
+      <div class="unidad"><span class="numero" id="c-horas">0</span><span class="etiqueta">horas</span></div>
+      <div class="unidad"><span class="numero" id="c-min">0</span><span class="etiqueta">minutos</span></div>
+      <div class="unidad"><span class="numero" id="c-seg">0</span><span class="etiqueta">segundos</span></div>
+    </div>
+    <p class="subtitulo" style="margin-top:28px">...y quiero que este número siga creciendo para siempre 💞</p>
+    <button class="boton" onclick="irA('p-razones')">Siguiente →</button>
+  </section>
+
+  <!-- 4. RAZONES -->
+  <section class="pantalla" id="p-razones">
+    <h2>Razones por las que te quiero</h2>
+    <p class="subtitulo">Toca cada corazón 💗</p>
+    <div class="razones" id="razones"></div>
+    <button class="boton" onclick="irA('p-pregunta')">Una última cosa... →</button>
+  </section>
+
+  <!-- 5. PREGUNTA FINAL -->
+  <section class="pantalla" id="p-pregunta">
+    <h2>¿Me dejas seguir haciéndote feliz?</h2>
+    <div class="botones-final" id="zona-botones">
+      <button class="boton" id="btn-si">¡Sí! 💖</button>
+      <button class="boton" id="btn-no">No</button>
+    </div>
+  </section>
+
+  <!-- 6. FINAL -->
+  <section class="pantalla" id="p-final">
+    <div class="gigante">💖</div>
+    <h1>¡Sabía que dirías que sí!</h1>
+    <p class="subtitulo">Te quiero muchísimo, <span class="nombre-ella"></span>.<br>Feliz 4 meses, mi vida. Por muchos más. 🌹</p>
+  </section>
+
+  <script>
+    // =====================================================
+    //  ✏️  PERSONALIZA AQUÍ  ✏️
+    // =====================================================
+    const CONFIG = {
+      nombreElla: "Mi amor",          // 👉 pon su nombre o como le dices
+      tuNombre:   "Alejandro",        // 👉 tu nombre para la firma
+      // 👉 fecha en que empezaron (año, mes, día, hora, minuto). OJO: el mes va de 1 a 12
+      fechaInicio: [2026, 7, 24, 0, 0],
+
+      carta: `Llevamos 4 meses juntos y me di cuenta de que nunca te había hecho algo con mis propias manos... así que aquí está.
+
+Gracias por cada risa, por cada mensaje de buenos días, por aguantarme y por hacer que mis días sean mucho más bonitos.
+
+No sé qué hice para tener a alguien como tú, pero cada día doy gracias por eso.
+
+Te quiero más de lo que estas palabras pueden decir.`,
+
+      razones: [
+        "Tu sonrisa me arregla el día 😊",
+        "Cómo me miras cuando crees que no me doy cuenta 👀",
+        "Que me haces reír como nadie 😂",
+        "Tu forma de cuidarme 🤗",
+        "Que contigo puedo ser yo mismo 💫",
+        "Simplemente porque eres tú ❤️",
+      ],
+    };
+    // =====================================================
+
+    // Nombres
+    document.querySelectorAll('.nombre-ella').forEach(el => el.textContent = CONFIG.nombreElla);
+    document.getElementById('firma').textContent = '— Con todo mi amor, ' + CONFIG.tuNombre;
+
+    // Cambiar de pantalla
+    function irA(id) {
+      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+      document.getElementById(id).classList.add('activa');
+      window.scrollTo(0, 0);
+    }
+
+    // Corazones flotando
+    const emojis = ['💖', '💕', '💗', '❤️', '💘', '🌸'];
+    function lanzarCorazon(cantidad = 1) {
+      for (let i = 0; i < cantidad; i++) {
+        const c = document.createElement('div');
+        c.className = 'corazon-fondo';
+        c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.fontSize = (16 + Math.random() * 22) + 'px';
+        c.style.animationDuration = (5 + Math.random() * 5) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 10000);
+      }
+    }
+    setInterval(() => lanzarCorazon(1), 700);
+
+    // 1. Abrir el sobre
+    document.getElementById('sobre').addEventListener('click', function () {
+      this.classList.add('abierto');
+      lanzarCorazon(15);
+      setTimeout(() => { irA('p-carta'); escribirCarta(); }, 900);
+    });
+
+    // 2. Carta que se escribe sola
+    function escribirCarta() {
+      const el = document.getElementById('texto-carta');
+      const texto = CONFIG.carta;
+      let i = 0;
+      const t = setInterval(() => {
+        el.textContent = texto.slice(0, ++i);
+        if (i >= texto.length) {
+          clearInterval(t);
+          el.classList.add('listo');
+          document.getElementById('firma').classList.add('visible');
+          document.getElementById('btn-carta').style.display = 'block';
+        }
+      }, 35);
+    }
+    document.getElementById('btn-carta').addEventListener('click', () => irA('p-contador'));
+
+    // 3. Contador en vivo
+    const [a, m, d, h, mi] = CONFIG.fechaInicio;
+    const inicio = new Date(a, m - 1, d, h, mi);
+    function actualizarContador() {
+      let s = Math.max(0, Math.floor((Date.now() - inicio) / 1000));
+      document.getElementById('c-dias').textContent  = Math.floor(s / 86400);
+      document.getElementById('c-horas').textContent = Math.floor(s % 86400 / 3600);
+      document.getElementById('c-min').textContent   = Math.floor(s % 3600 / 60);
+      document.getElementById('c-seg').textContent   = s % 60;
+    }
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+
+    // 4. Tarjetas de razones
+    const contRazones = document.getElementById('razones');
+    CONFIG.razones.forEach((razon, i) => {
+      const t = document.createElement('div');
+      t.className = 'tarjeta';
+      t.innerHTML = `
+        <div class="tarjeta-interior">
+          <div class="cara frente">❤️<small>#${i + 1}</small></div>
+          <div class="cara reverso"></div>
+        </div>`;
+      t.querySelector('.reverso').textContent = razon;
+      t.addEventListener('click', () => { t.classList.toggle('girada'); lanzarCorazon(3); });
+      contRazones.appendChild(t);
+    });
+
+    // 5. El botón "No" se escapa 😏
+    const btnNo = document.getElementById('btn-no');
+    function escapar() {
+      btnNo.style.position = 'fixed';
+      btnNo.style.left = (20 + Math.random() * (window.innerWidth - 140)) + 'px';
+      btnNo.style.top  = (20 + Math.random() * (window.innerHeight - 80)) + 'px';
+    }
+    btnNo.addEventListener('mouseenter', escapar);
+    btnNo.addEventListener('touchstart', e => { e.preventDefault(); escapar(); });
+    btnNo.addEventListener('click', escapar);
+
+    document.getElementById('btn-si').addEventListener('click', () => {
+      btnNo.style.display = 'none';
+      irA('p-final');
+      lanzarCorazon(40);
+      setInterval(() => lanzarCorazon(3), 400);
+    });
+  </script>
+</body>
+</html>
